@@ -79,7 +79,7 @@ meta = dict(
  abstract="""This is a simple template for the slides package.""",
  YYYY=YYYY, MM=MM, DD=DD,
  tag=tag,
- projects='anr-causal',
+ projects='aprovis-3-d',
  time_start = '15:45:00',
  time_end = '16:30:00',
  # url=f'https://laurentperrinet.github.io/talk/{slugify(tag)}',

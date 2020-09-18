@@ -6,7 +6,7 @@
 * When: 18/09/2020, time: 15:45:00-16:30:00
 
 * What:
-  * Slides @ https://laurentperrinet.github.io/example
-  * Code for slides @ https://github.com/laurentperrinet/example/
+  * Slides @ https://laurentperrinet.github.io//Users/laurentperrinet/quantic/libraries/slides
+  * Code for slides @ https://github.com/laurentperrinet//Users/laurentperrinet/quantic/libraries/slides/
   * Abstract: This is a simple template for the slides package.
 
