@@ -164,7 +164,9 @@ class Slides:
 
     def embed(self, fname, ftype='image'):
         """
-        convert to bytes
+
+        Convert to bytes
+
         https://www.iandevlin.com/blog/2012/09/html5/html5-media-and-data-uri
 
         """
@@ -189,11 +191,11 @@ class Slides:
 
     def add_slide(self, hide=False, image_fname=None, video_fname=None, content='', notes='', md=False, embed=None):
         if hide: return 'Slide hidden'
-
+        # https://developer.mozilla.org/fr/docs/Web/CSS/background-size
         if not image_fname is None:
             if (embed is None and self.meta['embed']) or ((not embed is None ) and embed):
                 image_fname = self.embed_image(image_fname)
-            slide = '<section data-background="{image_fname}" data-background-size="{width}px"> '.format(image_fname=image_fname, width = self.meta['width'])
+            slide = '<section data-background="{image_fname}" data-background-size="{height}px"> '.format(image_fname=image_fname, height = self.meta['height'])
         elif not video_fname is None:
             if (embed is None and self.meta['embed']) or ((not embed is None ) and embed):
                 video_fname = self.embed_video(video_fname)
@@ -228,6 +230,7 @@ class Slides:
     def add_slide_outline(self, i=None, title='Outline', notes=''):
         content = self.content_title(title)  + '\n<ol>\n'
         for i_, section in enumerate(self.meta['sections']):
+            section = markdown.markdown(section)[3:-4]
             if i_ is i:
                 content += """
                     <h3>
@@ -282,12 +285,13 @@ class Slides:
             fragment_begin = f'<p class="fragment {fragment_type}">'
         else:
             fragment_begin = '<p>'
+
         for point in list_of_points:
             content += f"""
 {fragment_begin}
-<li>
-        {markdown.markdown(point)}
-</li>
+<h3>
+<li>{markdown.markdown(point)[3:-4]}</li>
+</h3>
 </p>
 """
         content += "</ul>"

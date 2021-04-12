@@ -31,7 +31,7 @@ figpath_slides = 'https://laurentperrinet.github.io/slides.py/figures/'
 import sys
 print(sys.argv)
 tag = sys.argv[0].split('.')[0]
-if len(sys.argv)>1:
+if len(sys.argv) > 1:
     slides_filename = sys.argv[1]
 else:
     slides_filename = None
@@ -62,10 +62,7 @@ meta = dict(
  width= 1600,
  height= 1000,
  margin= 0.1618,#
- # reveal_path='https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.0.2/',
- # reveal_path='https://raw.githubusercontent.com/laurentperrinet/2020-09-14_IWAI/master/reveal.js-master/',
  reveal_path='https://laurentperrinet.github.io/2020-09-14_IWAI/reveal.js-master/',
- #reveal_path='https://s3.amazonaws.com/hakim-static/reveal-js/',
  theme='simple',
  bgcolor="white",
  author='Perrinet, Laurent U',
@@ -74,7 +71,7 @@ meta = dict(
  short_title="What's slides.py?",
  conference="Example conference",
  conference_url='https://github.com/laurentperrinet/slides.py',
- short_conference='Ex conf',
+ short_conference=' (Ex conf)',
  location='INT, Marseille (France)',
  abstract="""This is a simple template for the slides package.""",
  YYYY=YYYY, MM=MM, DD=DD,
@@ -111,7 +108,7 @@ s = Slides(meta)
 # path_people = os.path.join(home, 'ownCNRS/2019-01_LACONEU/people')
 path_people = home.joinpath('github/hugo_academic/content/authors')
 # path_people = 'https://laurentperrinet.github.io/authors/'
- # ls ~/github/hugo_academic/content/authors/**/avat*
+# ls ~/github/hugo_academic/content/authors/**/avat*
 People = ''
 People += s.content_imagelet(path_people.joinpath('chloe-pasturel/avatar.png'), height_px, embed=True)
 People += s.content_imagelet(path_people.joinpath('emmanuel-dauce/avatar.jpg'), height_px, embed=True)
@@ -171,7 +168,7 @@ intro += s.content_imagelet('https://laurentperrinet.github.io/slides.py/figures
                             s.meta['height']*.32,
                             embed=False) #bgcolor="black",
 intro += """
-<h4><a href="{conference_url}">{conference} ({short_conference})</a>, {DD}/{MM}/{YYYY} </h4>
+<h4><a href="{conference_url}">{conference} {short_conference}</a>, {DD}/{MM}/{YYYY} </h4>
 
 {Acknowledgements}
 """.format(**meta)
@@ -264,7 +261,7 @@ myurl = 'https://docs.python.org/3/_static/py.png'
 myurl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Gruenebaumpython4cele4.jpg/1200px-Gruenebaumpython4cele4.jpg"
 s.add_slide(content=s.content_figures(
                     [myurl], bgcolor="black",
-                    height=s.meta['height']*.3, width=s.meta['height']*1.2),
+                    height=s.meta['height']*.3), #  width=s.meta['height']*1.2),
             notes="""
 You can embed images from an URL.
 """)
@@ -312,7 +309,7 @@ if slides_filename is None:
         text_file.write("""\
 # {title}
 
-* What:: talk @ [{conference} ({short_conference})]({conference_url})
+* What:: talk @ [{conference}{short_conference}]({conference_url})
 * Who:: {author}
 * Where: {location}, see {url}
 * When: {DD:02d}/{MM:02d}/{YYYY}, time: {time_start}-{time_end}
