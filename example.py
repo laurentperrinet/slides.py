@@ -106,7 +106,7 @@ s = Slides(meta)
 # 🏄🏄🏄🏄🏄🏄🏄🏄                INTRO                    🏄🏄🏄🏄🏄🏄🏄🏄
 ###############################################################################
 # path_people = os.path.join(home, 'ownCNRS/2019-01_LACONEU/people')
-path_people = home.joinpath('github/hugo_academic/content/authors')
+path_people = home.joinpath('quantic/blog/hugo_academic/content/authors')
 # path_people = 'https://laurentperrinet.github.io/authors/'
 # ls ~/github/hugo_academic/content/authors/**/avat*
 People = ''
