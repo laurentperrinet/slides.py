@@ -4,16 +4,19 @@
 import markdown
 import base64
 
+
+
 class Slides:
     """
     TODO: make a class for one slide with labels etc - compile at the end
     TODO: a slide show is a (possibly nested) list of slides
 
     """
+
     def __init__(self, meta):
         self.meta = meta
         # Simply using https://docs.python.org/3.3/library/string.html#format-string-syntax to format strings...
-        self.header ="""<!doctype html>
+        self.header = """<!doctype html>
 <html>
     <head>
         <meta charset="utf-8"/>
@@ -63,14 +66,14 @@ class Slides:
     <script src="{reveal_path}plugin/highlight/highlight.js"></script>
 
         """.format(**meta)
-        self.footer +="""
+        self.footer += """
 	<script>
 
             // Full list of configuration options available at:
             // https://github.com/hakimel/reveal.js#configuration
             Reveal.initialize({
         """
-        self.footer +="""
+        self.footer += """
                 // The "normal" size of the presentation, aspect ratio will be preserved
                 // when the presentation is scaled to fit different resolutions. Can be
                 // specified using percentage units.
@@ -80,7 +83,7 @@ class Slides:
                 // Factor of the display size that should remain empty around the content
                 margin: {margin},
         """.format(**meta)
-        self.footer +="""
+        self.footer += """
                 // Display a presentation progress bar
                 progress: true,
                 slideNumber: 'c/t',
@@ -124,11 +127,11 @@ class Slides:
 
         """.format(**meta)
         if self.meta['draft']:
-            self.footer +="""
+            self.footer += """
                 // Notes are only visible to the speaker inside of the speaker view. If you wish to share your notes with others you can initialize reveal.js with the showNotes config value set to true. Notes will appear near the presentations. https://revealjs.com/speaker-view/
                 showNotes: true,
         """
-        self.footer +="""
+        self.footer += """
 
                 // Learn about plugins: https://revealjs.com/plugins/
                 plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
@@ -142,7 +145,7 @@ class Slides:
         self.body = ''
 
     def open_section(self):
-        self.body +=  "<section>"
+        self.body += "<section>"
 
     def hide_slide(self, **kwargs):
         """
@@ -160,7 +163,6 @@ class Slides:
         else:
             fread = open(fname, 'rb').read()
         return base64.b64encode(fread).decode('utf-8').replace('\n', '')
-
 
     def embed(self, fname, ftype='image'):
         """
@@ -182,7 +184,8 @@ class Slides:
         return self.embed(video_fname, ftype='video')
 
     def content_imagelet(self, fname, height_px, embed=None):
-        if embed is None: embed = self.meta['embed']
+        if embed is None:
+            embed = self.meta['embed']
         if embed:
             data_src = self.embed_image(fname)
             return f'<img class="plain" data-src="{data_src}"  height="{height_px}px" />'
@@ -190,14 +193,15 @@ class Slides:
             return f'<img class="plain" data-src="{fname}"  height="{height_px}px" />'
 
     def add_slide(self, hide=False, image_fname=None, video_fname=None, content='', notes='', md=False, embed=None):
-        if hide: return 'Slide hidden'
+        if hide:
+            return 'Slide hidden'
         # https://developer.mozilla.org/fr/docs/Web/CSS/background-size
         if not image_fname is None:
-            if (embed is None and self.meta['embed']) or ((not embed is None ) and embed):
+            if (embed is None and self.meta['embed']) or ((not embed is None) and embed):
                 image_fname = self.embed_image(image_fname)
-            slide = '<section data-background="{image_fname}" data-background-size="{height}px"> '.format(image_fname=image_fname, height = self.meta['height'])
+            slide = '<section data-background="{image_fname}" data-background-size="{height}px"> '.format(image_fname=image_fname, height=self.meta['height'])
         elif not video_fname is None:
-            if (embed is None and self.meta['embed']) or ((not embed is None ) and embed):
+            if (embed is None and self.meta['embed']) or ((not embed is None) and embed):
                 video_fname = self.embed_video(video_fname)
             slide = '<section data-background-video="{}">'.format(video_fname)
         elif md:
@@ -215,8 +219,8 @@ class Slides:
 </script>
             """
 
-        if not notes=='':
-            slide +="""
+        if not notes == '':
+            slide += """
                 <aside class="notes">
                  {}
                 </aside>
@@ -228,7 +232,7 @@ class Slides:
         self.body += slide
 
     def add_slide_outline(self, i=None, title='Outline', notes=''):
-        content = self.content_title(title)  + '\n<ol>\n'
+        content = self.content_title(title) + '\n<ol>\n'
         for i_, section in enumerate(self.meta['sections']):
             section = markdown.markdown(section)[3:-4]
             if i_ is i:
@@ -281,7 +285,7 @@ class Slides:
         content = self.content_title(title) + """
             <ul>
             """
-        if not fragment_type is None :
+        if not fragment_type is None:
             fragment_begin = f'<p class="fragment {fragment_type}">'
         else:
             fragment_begin = '<p>'
@@ -303,12 +307,11 @@ class Slides:
         else:
             return "<h3>{}</h3>".format(title)
 
-
     def content_figures(self, list_of_figures, transpose=False,
                         list_of_weights=None, title=None, height=None, width=None,
                         embed=None, fragment=False, url=None,
                         bgcolor="white", cell_bgcolor="white"):
-        content =  self.content_title(title)
+        content = self.content_title(title)
 
         if height is None:
             height = self.meta['height']
@@ -318,13 +321,13 @@ class Slides:
             """.format(bgcolor=bgcolor, height=height)
 
         n_fig = len(list_of_figures)
-        if list_of_weights is None:#str(int() ) +"%"
-            sizes = [1./n_fig] * n_fig #+"%" for _ in list_of_figures]
+        if list_of_weights is None:  # str(int() ) +"%"
+            sizes = [1./n_fig] * n_fig  # +"%" for _ in list_of_figures]
         else:
             total_weight = sum(list_of_weights)
-            sizes = [weight/total_weight for weight in list_of_weights]#1./n_fig*
+            sizes = [weight/total_weight for weight in list_of_weights]  # 1./n_fig*
             # print(sizes)
-        if not transpose: # one line many columns
+        if not transpose:  # one line many columns
             content += """
             <tr padding=0px style="vertical-align:top" bgcolor={bgcolor}>
             """.format(bgcolor=bgcolor)
@@ -332,18 +335,18 @@ class Slides:
         for i_, (size, image_fname) in enumerate(zip(sizes, list_of_figures)):
             if width is None:
                 width_str = " "
-                width_ = int(size*self.meta['width'])#*height/self.meta['height']
+                width_ = int(size*self.meta['width'])  # *height/self.meta['height']
                 # print(width_)
             else:
                 width_ = int(size*width)
                 width_str = 'width="{width_}px"'.format(width_=width_)
 
-            if (embed is None and self.meta['embed']) or ((not embed is None ) and embed):
+            if (embed is None and self.meta['embed']) or ((not embed is None) and embed):
                 # data_uri = base64.b64encode(open(fname, 'rb').read()).decode('utf-8').replace('\n', '')
                 # fname = 'data:image/{ext};base64,{data_uri}'.format(ext=fname[-3:], data_uri=data_uri)
                 image_fname = self.embed_image(image_fname)
 
-            if fragment and i_>0:
+            if fragment and i_ > 0:
                 fragment_begin = '<p class="fragment">'
             else:
                 fragment_begin = '<p>'
@@ -354,7 +357,7 @@ class Slides:
             else:
                 fragment_end = '</p>'
 
-            if not transpose: # one line many columns
+            if not transpose:  # one line many columns
                 content += """
                 <td height={height} width="{width}" padding-top=0px padding-bottom=0px style="text-align:center; vertical-align:top" bgcolor="{cell_bgcolor}" >
                 {fragment_begin}
@@ -374,11 +377,11 @@ class Slides:
                     </td>
                 </tr>
                 """.format(cell_bgcolor=cell_bgcolor, height_=int(size*height),
-                        fname=image_fname,
-                        fragment_begin=fragment_begin, fragment_end=fragment_end)
+                           fname=image_fname,
+                           fragment_begin=fragment_begin, fragment_end=fragment_end)
 
         # closing table
-        if not transpose: # one line many columns
+        if not transpose:  # one line many columns
             content += """
             </tr>
             """
@@ -396,11 +399,12 @@ class Slides:
         return content
 
     def close_section(self):
-        self.body +=  "\n</section>\n"
+        self.body += "\n</section>\n"
 
     def compile(self, filename='index.html'):
         html = self.header + self.body + self.footer
-        with open(filename, 'w') as f: f.write(html)
+        with open(filename, 'w') as f:
+            f.write(html)
 # s.body += """
 # <script>
 #       document.getElementById('theme').setAttribute('href','dist/theme/white.css'); return false;">
