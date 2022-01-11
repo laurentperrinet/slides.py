@@ -4,6 +4,26 @@
 import markdown
 import base64
 
+# cf https://github.com/wowchemy/hugo-academic-cli/blob/4bb3b53a0f743520b6dbc51c8bb6aaa5c96cb6ba/academic/import_bibtex.py#L173
+import re
+
+
+def slugify(s, lower=True):
+    bad_symbols = (".", "_", ":")  # Symbols to replace with hyphen delimiter.
+    delimiter = "-"
+    good_symbols = (delimiter,)  # Symbols to keep.
+    for r in bad_symbols:
+        s = s.replace(r, delimiter)
+
+    s = re.sub(r"(\D+)(\d+)", r"\1\-\2", s)  # Delimit non-number, number.
+    s = re.sub(r"(\d+)(\D+)", r"\1\-\2", s)  # Delimit number, non-number.
+    s = re.sub(r"((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))", r"\-\1", s)  # Delimit camelcase.
+    s = "".join(c for c in s if c.isalnum() or c in good_symbols).strip()  # Strip non-alphanumeric and non-hyphen.
+    s = re.sub("-{2,}", "-", s)  # Remove consecutive hyphens.
+
+    if lower:
+        s = s.lower()
+    return s
 
 
 class Slides:
