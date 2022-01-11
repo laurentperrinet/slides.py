@@ -40,6 +40,8 @@ class Slides:
 <html>
     <head>
         <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 
         <title>{short_title} - {conference}</title>
 
@@ -49,26 +51,21 @@ class Slides:
         <meta name="apple-mobile-web-app-capable" content="yes" >
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
         <!-- General and theme style sheets -->
+		<link rel="stylesheet" href="{reveal_path}dist/reset.css">
         <link rel="stylesheet" href="{reveal_path}dist/reveal.css">
         <link rel="stylesheet" href="{reveal_path}dist/theme/{theme}.css" id="theme">
 
     	<!-- Theme used for syntax highlighting of code -->
         <link rel="stylesheet" href="{reveal_path}plugin/highlight/zenburn.css">
-
-         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-         <!--[if lt IE 9]>
-         <script src="{reveal_path}lib/js/html5shiv.js"></script>
-         <![endif]-->
-    """.format(**meta)
-
-        self.header += """
         <!-- Get Font-awesome from cdn -->
         <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css"> -->
     </head>
 
+    """.format(**meta)
+
+        self.header += """
 <body>
     <div class="reveal">
         <div class="slides">
@@ -94,6 +91,7 @@ class Slides:
             Reveal.initialize({
         """
         self.footer += """
+                hash: true,
                 // The "normal" size of the presentation, aspect ratio will be preserved
                 // when the presentation is scaled to fit different resolutions. Can be
                 // specified using percentage units.
@@ -146,11 +144,13 @@ class Slides:
                 theme: '{theme}', // available themes are in /dist/theme
 
         """.format(**meta)
+
         if self.meta['draft']:
             self.footer += """
                 // Notes are only visible to the speaker inside of the speaker view. If you wish to share your notes with others you can initialize reveal.js with the showNotes config value set to true. Notes will appear near the presentations. https://revealjs.com/speaker-view/
                 showNotes: true,
         """
+
         self.footer += """
 
                 // Learn about plugins: https://revealjs.com/plugins/
