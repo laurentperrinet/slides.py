@@ -1,3 +1,8 @@
+from slides import Slides
+from slides import slugify
+import sys
+from pathlib import Path
+import os
 __author__ = "Laurent Perrinet INT - CNRS"
 __licence__ = 'GPL licence'
 DEBUG = True
@@ -13,10 +18,8 @@ https://github.com/laurentperrinet/slides.py
 
 fig_width = 12
 
-import os
 # https://docs.python.org/3.8/library/pathlib.html
 # import pathlib
-from pathlib import Path
 
 home = Path(os.environ['HOME'])
 
@@ -28,7 +31,6 @@ Path.cwd().joinpath(figpath_talk).mkdir(parents=True, exist_ok=True)
 # figpath_slides = os.path.join(home, 'quantic/libraries/slides.py/figures/')
 figpath_slides = 'https://laurentperrinet.github.io/slides.py/figures/'
 #
-import sys
 print(sys.argv)
 tag = sys.argv[0].split('.')[0]
 if len(sys.argv) > 1:
@@ -36,7 +38,6 @@ if len(sys.argv) > 1:
 else:
     slides_filename = None
 
-from academic.cli import slugify
 slugified = slugify(tag)
 
 print('😎 Welcome to the script generating the slides for ', tag)
@@ -51,17 +52,16 @@ except:
     YYYY = datetime.now().year
 
 # see https://github.com/laurentperrinet/slides.py
-from slides import Slides
 
 height_px = 80
 height_ratio = .7
 
 meta = dict(
- embed = False,
- draft = DEBUG, # show notes etc
- width= 1600,
- height= 1000,
- margin= 0.1618,#
+ embed=False,
+ draft=DEBUG,  # show notes etc
+ width=1600,
+ height=1000,
+ margin=0.1618,
  reveal_path='https://laurentperrinet.github.io/2020-09-14_IWAI/reveal.js-master/',
  theme='simple',
  bgcolor="white",
@@ -77,8 +77,8 @@ meta = dict(
  YYYY=YYYY, MM=MM, DD=DD,
  tag=tag,
  projects='aprovis-3-d',
- time_start = '15:45:00',
- time_end = '16:30:00',
+ time_start='15:45:00',
+ time_end='16:30:00',
  # url=f'https://laurentperrinet.github.io/talk/{slugify(tag)}',
  url='https://laurentperrinet.github.io/slides.py',
  sections=['Intro', 'Methods', 'Results']
@@ -137,7 +137,7 @@ People += s.content_imagelet(path_people.joinpath('alberto-vergani/avatar.jpg'),
 People += s.content_imagelet(path_people.joinpath('angelo-franciosini/avatar.jpg'), height_px, embed=True)
 People += s.content_imagelet(path_people.joinpath('frederic-y-chavane/avatar.png'), height_px, embed=True)
 People += s.content_imagelet('https://www.python.org/static/community_logos/python-powered-h-140x182.png', height_px, embed=False)
-s.meta['Acknowledgements'] =f"""
+s.meta['Acknowledgements'] = f"""
 <small>
 <h5>Acknowledgements:</h5>
 <ul><li> Hakim El Hattab for <a href="https://revealjs.com/">reveal-js</a>
@@ -166,7 +166,7 @@ intro = """
 #                             embed=False)
 intro += s.content_imagelet('https://laurentperrinet.github.io/slides.py/figures/troislogos.png',
                             s.meta['height']*.32,
-                            embed=False) #bgcolor="black",
+                            embed=False)  # bgcolor="black",
 intro += """
 <h4><a href="{conference_url}">{conference} {short_conference}</a>, {DD}/{MM}/{YYYY} </h4>
 
@@ -228,7 +228,7 @@ s.add_slide_summary(
      'Navigate using the arrow keys',
      'see notes using the ``n`` key',
      'getting help using the ``?`` key'],
-     title='Useful shortcuts', fragment_type='grow',
+    title='Useful shortcuts', fragment_type='grow',
     notes="""
 * and write notes using markdown
 
@@ -261,7 +261,7 @@ myurl = 'https://docs.python.org/3/_static/py.png'
 myurl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Gruenebaumpython4cele4.jpg/1200px-Gruenebaumpython4cele4.jpg"
 s.add_slide(content=s.content_figures(
                     [myurl], bgcolor="black",
-                    height=s.meta['height']*.3), #  width=s.meta['height']*1.2),
+                    height=s.meta['height']*.3),  # width=s.meta['height']*1.2),
             notes="""
 You can embed images from an URL.
 """)
@@ -274,10 +274,10 @@ s.close_section()
 s.open_section()
 s.add_slide_outline()
 s.add_slide_summary(title='Conclusion',
-    list_of_points =['install using instructions on <a href=https://github.com/laurentperrinet/slides.py>https://github.com/laurentperrinet/slides.py</a>',
-     'suggest <a href="https://github.com/laurentperrinet/slides.py/issues">improvments or issues</a>, ',
-     'fork!'],
-    notes="""
+                    list_of_points=['install using instructions on <a href=https://github.com/laurentperrinet/slides.py>https://github.com/laurentperrinet/slides.py</a>',
+                                    'suggest <a href="https://github.com/laurentperrinet/slides.py/issues">improvments or issues</a>, ',
+                                    'fork!'],
+                    notes="""
 * and write notes using markdown
 
 """)
